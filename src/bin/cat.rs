@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::Read;
+use std::io::{BufReader, Read};
 /// This mimics the current cat implementation that spits out a file into your terminal.
 ///
 /// Psuedocode (boring version):
@@ -20,10 +20,20 @@ use std::process::exit;
 pub fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
 
+    if args.len() == 0 {
+        help();
+        exit(0);
+    }
+
     for arg in args {
-        let mut file = File::open(arg).expect("File should be readable");
+        let file = File::open(arg).expect("File should be readable");
+        let reader = BufReader::new(file);
+
         let mut contents = String::new();
-        file.read_to_string(&mut contents).expect("Read to string");
+        for byte in reader.bytes() {
+            let byte = byte.expect("Should be able to read byte");
+            contents.push_str(&String::from_utf8_lossy(&[byte]));
+        }
 
         print!("{}", contents);
     }
@@ -32,5 +42,5 @@ pub fn main() {
 }
 
 fn help() {
-    println!("Usage: cat <file1>")
+    println!("Usage: cat <file1> ...")
 }
