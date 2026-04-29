@@ -1,6 +1,8 @@
+use std::fs::File;
+use std::io::Read;
 /// This mimics the current cat implementation that spits out a file into your terminal.
 ///
-/// Psuedocode:
+/// Psuedocode (boring version):
 /// Read input from command (args)
 /// For each file in args
 ///     Open the file
@@ -8,7 +10,12 @@
 ///     Print out the contents
 /// exit
 ///
-use std::{env::Args, fs::File, io::Read, process::exit, str::Bytes};
+/// Pseudocode (better version):
+/// Read input from command line (args)
+///
+///
+///
+use std::process::exit;
 
 pub fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
