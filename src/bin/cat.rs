@@ -1,4 +1,13 @@
 /// This mimics the current cat implementation that spits out a file into your terminal.
+///
+/// Psuedocode:
+/// Read input from command (args)
+/// For each file in args
+///     Open the file
+///     Read the file contents
+///     Print out the contents
+/// exit
+///
 use std::{env::Args, fs::File, io::Read, process::exit, str::Bytes};
 
 pub fn main() {
@@ -8,7 +17,11 @@ pub fn main() {
         let mut file = File::open(arg).expect("File should be readable");
         let mut contents = String::new();
         file.read_to_string(&mut contents).expect("Read to string");
+
+        print!("{}", contents);
     }
+
+    exit(0)
 }
 
 fn help() {
