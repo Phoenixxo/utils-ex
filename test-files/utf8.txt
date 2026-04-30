@@ -1,0 +1,6 @@
+cafe
+café
+naive
+naïve
+snowman: ☃
+emoji: 🦀
