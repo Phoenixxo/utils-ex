@@ -9,3 +9,5 @@ This is solely just for my learning, and should not be treated as official or sa
 | -------------- | --------------- |
 | cat | ![done](https://img.shields.io/badge/status-done-brightgreen) |
 | wc | ![done](https://img.shields.io/badge/status-done-brightgreen) |
+| head | - |
+| tail | - |
