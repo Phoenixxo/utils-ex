@@ -7,5 +7,5 @@ This is solely just for my learning, and should not be treated as official or sa
 #### Table of completed commands
 | Name | Completed |
 | -------------- | --------------- |
-| cat | ![done] |
-| wc | ![done] |
+| cat | ![done](https://img.shields.io/badge/status-done-brightgreen) |
+| wc | ![done](https://img.shields.io/badge/status-done-brightgreen) |
