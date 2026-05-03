@@ -53,7 +53,12 @@ pub fn main() {
 
     let files: Vec<PathBuf> = args[file_start_idx..].iter().map(PathBuf::from).collect();
 
+    let multiple_files = files.len() > 1;
+
     for path in &files {
+        if multiple_files {
+            println!("<=== {} ===> \n", path.display());
+        }
         let file = File::open(path).unwrap_or_else(|err| {
             eprintln!("Problem opening file: {:?}", err);
             exit(1);
@@ -97,30 +102,25 @@ pub fn main() {
                     } // EOF
 
                     let chunk = &buffer[..n];
-                    let mut prev = 0;
 
                     for pos in memchr_iter(b'\n', &chunk) {
                         lines_seen += 1;
 
                         if lines_seen == output_size {
-                            match stdout().write_all(&chunk[prev..=pos]) {
-                                Ok(it) => it,
-                                Err(err) => return eprintln!("{:?}", err),
-                            };
+                            stdout().write_all(&chunk[..=pos]).unwrap_or_else(|err| {
+                                eprintln!("{:?}", err);
+                            });
                             break;
                         }
-
-                        prev = pos + 1;
                     }
 
                     if lines_seen == output_size {
                         break;
                     }
 
-                    match stdout().write_all(&chunk[prev..]) {
-                        Ok(it) => it,
-                        Err(err) => return eprintln!("{:?}", err),
-                    };
+                    stdout().write_all(chunk).unwrap_or_else(|err| {
+                        eprintln!("{:?}", err);
+                    });
                 }
             }
         }
